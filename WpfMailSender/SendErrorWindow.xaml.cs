@@ -10,24 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Net;
-using System.Net.Mail;
-using MahApps.Metro.Controls;
 
 namespace WpfMailSender
 {
-    public partial class MailSender
+    /// <summary>
+    /// Логика взаимодействия для SendErrorWindow.xaml
+    /// </summary>
+    public partial class SendErrorWindow
     {
-        public MailSender()
+        public SendErrorWindow()
         {
             InitializeComponent();
         }
 
-        private void BtnSendEmail_OnClick(object sender, RoutedEventArgs e)
+        private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
-            
+            Close();
         }
     }
 }

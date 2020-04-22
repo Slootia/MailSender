@@ -65,11 +65,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppConfigClass.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="DBClass.cs" />
     <Compile Include="EmailSendServiceClass.cs" />
     <Compile Include="SchedulerClass.cs" />
     <Compile Include="SendEndWindow.xaml.cs">
       <DependentUpon>SendEndWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SendErrorWindow.xaml.cs">
+      <DependentUpon>SendErrorWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MailSender.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -84,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SendEndWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SendErrorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
