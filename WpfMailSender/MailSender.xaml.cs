@@ -14,13 +14,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
 using System.Net.Mail;
+using MahApps.Metro.Controls;
 
 namespace WpfMailSender
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    public partial class MailSender : Window
+    public partial class MailSender
     {
         public MailSender()
         {
@@ -60,7 +58,8 @@ namespace WpfMailSender
                     }
                 }
             }
-            MessageBox.Show("Работа завершена.");
+            SendEndWindow sew = new SendEndWindow();
+            sew.ShowDialog();
 
         }
     }
