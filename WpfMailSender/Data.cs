@@ -17,8 +17,8 @@ namespace WpfMailSender
         public static string SenderEmail { get; set; }
         public static string SenderPassword { get; set; }
         public static List<string> ReceiverList { get; set; }
-        public static string Subject { get; set; }
-        public static string Body { get; set; }
+        public static string Subject { get; set; } = "TestSubj";
+        public static string Body { get; set; } = "TestBody";
     }
 
     public static class ExceptionMessage

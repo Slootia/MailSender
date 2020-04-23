@@ -6,15 +6,29 @@
                       xmlns:local="clr-namespace:WpfMailSender"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       mc:Ignorable="d"
-                      Title="MailSender" Height="450" Width="800">
+                      Title="Рассыльщик" MinHeight ="450" MinWidth="800" Height="450" Width="800">
     <DockPanel>
-        <Menu Height="25" VerticalAlignment="Top" DockPanel.Dock="Top"/>
+        <Menu Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">
+            <MenuItem Header="Файл" Width="70" IsTabStop="False" TabIndex="0"/>
+            <MenuItem Header="Помощь" Width="70" IsTabStop="False" TabIndex="0"/>
+        </Menu>
         <TabControl DockPanel.Dock="Top">
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Редактор писем">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="tbSubject" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Margin="10,10,0,0" TabIndex="1" DataContext="{Binding Path=(local:Letter.Subject)}" Text="{Binding Path=(local:Letter.Subject)}"/>
+                    <TextBox x:Name="tbBody" TextWrapping="Wrap" Margin="10,42,10,10" TabIndex="2" DataContext="{Binding Path=(local:Letter.Body)}" Text="{Binding Path=(local:Letter.Body)}"/>
+                </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Настройка">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="SMTP" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbSmtp" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="1" DataContext="{Binding Path=(local:ConnectionData.SmtpClient)}" Text="{Binding Path=(local:ConnectionData.SmtpClient)}"/>
+                    <TextBox x:Name="tbPort" HorizontalAlignment="Left" Height="23" Margin="135,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TabIndex="2" DataContext="{Binding Path=(local:ConnectionData.SmtpPort)}" Text="{Binding Path=(local:ConnectionData.SmtpPort)}"/>
+                    <Label Content="Email" HorizontalAlignment="Left" Margin="12,80,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbSender" HorizontalAlignment="Left" Height="23" Margin="10,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" TabIndex="3" DataContext="{Binding Path=(local:Letter.SenderEmail)}" Text="{Binding Path=(local:Letter.SenderEmail)}"/>
+                    <Label Content="Пароль" HorizontalAlignment="Left" Margin="12,130,0,0" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="passBox" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Width="175" TabIndex="4" DataContext="{Binding Path=(local:Letter.SenderPassword)}"/>
+                </Grid>
             </TabItem>
         </TabControl>
 

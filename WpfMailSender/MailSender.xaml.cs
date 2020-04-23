@@ -24,10 +24,5 @@ namespace WpfMailSender
         {
             InitializeComponent();
         }
-
-        private void BtnSendEmail_OnClick(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }
