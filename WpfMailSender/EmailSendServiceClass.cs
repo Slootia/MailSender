@@ -13,11 +13,20 @@ namespace WpfMailSender
     {
         public void StartMailing()
         {
-            foreach (var email in Letter.ReceiverList)
+            try
             {
-                SendMail(email);
+                foreach (var email in Letter.ReceiverList)
+                {
+                    SendMail(email);
+                }
             }
-            
+            catch
+            {
+                var errorWindow = new SendErrorWindow();
+                errorWindow.ShowDialog();
+            }
+            var endWindow = new SendEndWindow();
+            endWindow.ShowDialog();
         }
 
         private void SendMail(string mail)
@@ -33,14 +42,7 @@ namespace WpfMailSender
                     sc.UseDefaultCredentials = false;
                     sc.Credentials = new NetworkCredential(Letter.SenderEmail, Letter.SenderPassword);
                     sc.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    try
-                    {
-                        sc.Send(mm);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"{ExceptionMessage.SendException} {ex}");
-                    }
+                    sc.Send(mm);
                 }
             }
         }
