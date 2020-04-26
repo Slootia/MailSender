@@ -1,33 +1,111 @@
-﻿<Controls:MetroWindow x:Class="WpfMailSender.MailSender"
+﻿<Controls:MetroWindow
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:local="clr-namespace:WpfMailSender"
+                      x:Class="WpfMailSender.MailSender"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:TabSwitcher="clr-namespace:TabSwitcher;assembly=TabSwitcher"
                       mc:Ignorable="d"
-                      Title="Рассыльщик" MinHeight ="450" MinWidth="800" Height="450" Width="800">
+                      Title="Рассыльщик" MinHeight ="450" MinWidth="800" Height="600" Width="1000" Icon="Icons/Logo.png">
     <DockPanel>
         <Menu Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">
-            <MenuItem Header="Файл" Width="70" IsTabStop="False" TabIndex="0"/>
+            <MenuItem x:Name="miClose" Header="Файл" Width="70" IsTabStop="False" TabIndex="0">
+                <MenuItem Header="Закрыть" Height="30" Width="115" Click="miClose_Click"/>
+            </MenuItem>
             <MenuItem Header="Помощь" Width="70" IsTabStop="False" TabIndex="0"/>
         </Menu>
-        <TabControl DockPanel.Dock="Top">
-            <TabItem Header="Редактор писем">
+        <TabControl x:Name="tabControl" DockPanel.Dock="Top" UseLayoutRounding="False" SelectedIndex="0">
+            <TabItem x:Name="tabForming" Header="Формирование группы рассылки" TabIndex="0">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="tbSubject" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Margin="10,10,0,0" TabIndex="1" DataContext="{Binding Path=(local:Letter.Subject)}" Text="{Binding Path=(local:Letter.Subject)}"/>
-                    <TextBox x:Name="tbBody" TextWrapping="Wrap" Margin="10,42,10,10" TabIndex="2" DataContext="{Binding Path=(local:Letter.Body)}" Text="{Binding Path=(local:Letter.Body)}"/>
+                    <DataGrid x:Name="dgEmails" Margin="0,65,0,0"/>
+                    <ToolBarTray Height="65" VerticalAlignment="Top">
+                        <ToolBar x:Name="tbSender" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="500">
+                            <Label x:Name="lSender" Content="Выбрать отправителя" Height="25" VerticalAlignment="Top" Width="130"/>
+                            <ComboBox x:Name="cbSenderSelect" Height="25" Margin="0,0,0,-1" VerticalAlignment="Stretch" Width="270" ToolTip="Выбрать e-mail отправителя" SelectedIndex="0"/>
+                            <Button x:Name="btnAddSender" Height="25" Width="25" ToolTip="Добавить">
+                                <Image Source="Icons/add.png"/>
+                            </Button>
+                            <Button x:Name="btnEditSender" Height="25" Width="25" ToolTip="Редактировать">
+                                <Image Source="Icons/pencil.png"/>
+                            </Button>
+                            <Button x:Name="btnDeleteSender" Height="25" Width="25" ToolTip="Удалить">
+                                <Image Source="Icons/delete.png"/>
+                            </Button>
+                        </ToolBar>
+                        <ToolBar x:Name="tbSmtp" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="500" Band="1" BandIndex="0">
+                            <Label x:Name="lSmtp" Content="Выбрать smtp-сервер" Height="25" Width="Auto"/>
+                            <ComboBox x:Name="cbSmtpSelect" Height="25" Margin="0" VerticalAlignment="Stretch" Width="270" SelectedIndex="0" ToolTip="Выбрать smtp-сервер">
+                                <ComboBoxItem Content="smtp.yandex.ru" HorizontalAlignment="Left" Width="268"/>
+                            </ComboBox>
+                            <Button x:Name="btnAddSmtp" Width="25" Height="25" ToolTip="Добавить">
+                                <Image Source="Icons/add.png"/>
+                            </Button>
+                            <Button x:Name="btnEditSmtp" Width="25" Height="25" ToolTip="Редактировать">
+                                <Image Source="Icons/pencil.png"/>
+                            </Button>
+                            <Button x:Name="btnDeleteSmtp" Width="25" Height="25" ToolTip="Удалить">
+                                <Image Source="Icons/delete.png"/>
+                            </Button>
+                        </ToolBar>
+                        <ToolBar x:Name="tbPlaner" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Band="0" BandIndex="1" Width="210">
+                            <Label x:Name="lPlaner" Content="Перейти в планировщик" Height="25"/>
+                            <Button x:Name="btnClock" Height="25" Width="25" ToolTip="Перейти в планировщик" Click="btnClock_Click">
+                                <Image Source="Icons/clock.png"/>
+                            </Button>
+                        </ToolBar>
+                        <ToolBar x:Name="tbAddressee" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Band="1" BandIndex="1" Width="210" >
+                            <Label x:Name="lAddressee" Content="Список адресатов" Height="25" Width="Auto"/>
+                            <Button x:Name="btnAddAddressee" Width="25" Height="25" ToolTip="Добавить">
+                                <Image Source="Icons/add.png"/>
+                            </Button>
+                            <Button x:Name="btnEditAddressee" Width="25" Height="25" ToolTip="Редактировать">
+                                <Image Source="Icons/pencil.png"/>
+                            </Button>
+                            <Button x:Name="btnDeleteAddressee" Width="25" Height="25" ToolTip="Удалить">
+                                <Image Source="Icons/delete.png"/>
+                            </Button>
+                        </ToolBar>
+                    </ToolBarTray>
+                    <TabSwitcher:TabSwitcherControl x:Name="tscTabSwitcherForming" IsHidebtnPrevious="True" Margin="736,0,0,436" btnNextClick="tscTabSwitcherForming_btnNextClick"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Настройка">
+            <TabItem x:Name="tabPlanner" Header="Планировщик" TabIndex="1">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="SMTP" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="tbSmtp" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="1" DataContext="{Binding Path=(local:ConnectionData.SmtpClient)}" Text="{Binding Path=(local:ConnectionData.SmtpClient)}"/>
-                    <TextBox x:Name="tbPort" HorizontalAlignment="Left" Height="23" Margin="135,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TabIndex="2" DataContext="{Binding Path=(local:ConnectionData.SmtpPort)}" Text="{Binding Path=(local:ConnectionData.SmtpPort)}"/>
-                    <Label Content="Email" HorizontalAlignment="Left" Margin="12,80,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="tbSender" HorizontalAlignment="Left" Height="23" Margin="10,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" TabIndex="3" DataContext="{Binding Path=(local:Letter.SenderEmail)}" Text="{Binding Path=(local:Letter.SenderEmail)}"/>
-                    <Label Content="Пароль" HorizontalAlignment="Left" Margin="12,130,0,0" VerticalAlignment="Top"/>
-                    <PasswordBox x:Name="passBox" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Width="175" TabIndex="4" DataContext="{Binding Path=(local:Letter.SenderPassword)}"/>
+                    <Calendar x:Name="cldSchedulDateTimes" Margin="0,0,807,285" SelectionMode="MultipleRange"/>
+                    <TextBox x:Name="tbTimePicker" HorizontalAlignment="Left" Height="23" Margin="0,211,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="179"/>
+                    <Button x:Name="btnSend" HorizontalAlignment="Left" Margin="0,237,0,0" VerticalAlignment="Top" Width="179" Click="btnSend_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/clock.png" Width="16" Height="16"/>
+                            <TextBlock Margin="3, 0, 0, 0" Text="Отправить запланировано" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnSendAtOnce" HorizontalAlignment="Left" Margin="0,264,0,0" VerticalAlignment="Top" Width="179" Click="btnSendAtOnce_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/letter.png" Width="16" Height="16"/>
+                            <TextBlock Margin="3, 0, 0, 0" Text="Отправить сразу" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <TabSwitcher:TabSwitcherControl x:Name="tscTabSwitcherPlanner" Height="60" Margin="736,0,0,436" Width="250" btnNextClick="tscTabSwitcherPlanner_btnNextClick" btnPreviousClick="tscTabSwitcherPlanner_btnPreviousClick"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="TabEdit" Header="Редактор писем" TabIndex="2">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="tbSubject" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Margin="10,10,0,0" TabIndex="1" DataContext="{Binding (local:Letter.Subject)}" Text="{Binding (local:Letter.Subject)}"/>
+                    <RichTextBox Margin="10,42,10,10" TabIndex="2" DataContext="{Binding (local:Letter.Body)}">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="{Binding (local:Letter.Body)}"/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <TabSwitcher:TabSwitcherControl x:Name="tscTabSwitcherEdit" Height="42" Margin="736,0,0,454" Width="250" btnNextClick="tscTabSwitcherEdit_btnNextClick" btnPreviousClick="tscTabSwitcherEdit_btnPreviousClick"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabStatististic" Header="Статистика" TabIndex="3">
+                <Grid Background="#FFE5E5E5">
+                    <TabSwitcher:TabSwitcherControl x:Name="tscTabSwitcherStatistic" Height="60" Margin="736,0,0,436" Width="250" IsHideBtnNext="True" btnPreviousClick="tscTabSwitcherStatistic_btnPreviousClick"/>
                 </Grid>
             </TabItem>
         </TabControl>
