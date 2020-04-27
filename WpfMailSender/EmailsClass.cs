@@ -13,7 +13,9 @@ namespace WpfMailSender
 
         private static Dictionary<string, string> dicSenders = new Dictionary<string, string>()
         {
-            //TODO: Добавить email'ы отправителей
+            {"test@mail.ru", CodePassword.getPassword("1234")},
+            {"test1@mail.ru", CodePassword.getPassword("1234")},
+            {"test2@mail.ru", CodePassword.getPassword("1234")}
         };
     }
 }

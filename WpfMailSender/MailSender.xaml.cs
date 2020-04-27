@@ -26,9 +26,8 @@ namespace WpfMailSender
             InitializeComponent();
             DBClass db = new DBClass();
             dgEmails.ItemsSource = db.Emails;
-            cbSenderSelect.ItemsSource = EmailsClass.Senders;
-            cbSenderSelect.DisplayMemberPath = "Key";
-            cbSenderSelect.SelectedValuePath = "Value";
+            customControllSender.Dictionary = EmailsClass.Senders;
+            customControllSmtp.Dictionary = SmtpClass.SmtpDictionary;
         }
 
         private void miClose_Click(object sender, RoutedEventArgs e)
@@ -43,8 +42,17 @@ namespace WpfMailSender
 
         private void btnSendAtOnce_Click(object sender, RoutedEventArgs e)
         {
-            string strLogin = cbSenderSelect.Text;
-            string strPassword = cbSenderSelect.SelectedValue.ToString();
+            var start = rtbBody.Document.ContentStart;
+            var end = rtbBody.Document.ContentEnd;
+            int difference = start.GetOffsetToPosition(end);
+            if (difference <= 0 || difference == 4 || tbSubject.Text.Length == 0)
+            {
+                MessageBox.Show("Письмо или тема не заполнены");
+                tabControl.SelectedIndex = 2;
+                return;
+            }
+            string strLogin = customControllSender.SelectedItem.Key;
+            string strPassword = customControllSender.SelectedItem.Value;
             if (string.IsNullOrEmpty(strLogin))
             {
                 MessageBox.Show("Выберите отправителя");
@@ -56,15 +64,27 @@ namespace WpfMailSender
                 return;
             }
 
-            EmailSendServiceClass emailSender = new EmailSendServiceClass(strLogin, strPassword);
-            emailSender.SendMails((IQueryable<Email>)dgEmails.ItemsSource);
+            string richText = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd).Text;
+            EmailSendServiceClass emailSender = new EmailSendServiceClass(strLogin,
+                strPassword,
+                customControllSmtp.SelectedItem.Key,
+                customControllSmtp.SelectedItem.Value, richText, tbSubject.Text);
 
         }
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
+            var start = rtbBody.Document.ContentStart; 
+            var end = rtbBody.Document.ContentEnd; 
+            int difference = start.GetOffsetToPosition(end);
+            if (difference<=0 || difference == 4 || tbSubject.Text.Length == 0)
+            {
+                MessageBox.Show("Письмо или тема не заполнены");
+                tabControl.SelectedIndex = 2;
+                return;
+            }
             SchedulerClass sc = new SchedulerClass();
-            TimeSpan tsSendTime = sc.GetSendTime(tbTimePicker.Text);
+            TimeSpan tsSendTime = sc.GetSendTime(tpTimeSend.Text);
             if (tsSendTime == new TimeSpan())
             {
                 MessageBox.Show("Некорректный формат даты");
@@ -76,41 +96,29 @@ namespace WpfMailSender
                 MessageBox.Show("Дата и время отправки писем не могут быть раньше, чем настоящее время");
                 return;
             }
-            EmailSendServiceClass emailSender = new EmailSendServiceClass(cbSenderSelect.Text, cbSenderSelect.SelectedValue.ToString());
+            string strLogin = customControllSender.SelectedItem.Key;
+            string strPassword = customControllSender.SelectedItem.Value;
+            string richText = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd).Text;
+            EmailSendServiceClass emailSender = new EmailSendServiceClass(strLogin,
+                strPassword,
+                customControllSmtp.SelectedItem.Key,
+                customControllSmtp.SelectedItem.Value, richText, tbSubject.Text);
             sc.SendEmails(dtSendDateTime, emailSender, (IQueryable<Email>)dgEmails.ItemsSource);
 
         }
 
-
-        //Блок ниже можно переписать, если вынести свитчер в общий блок и скрывать кнопки в зависимости от SelectedIndex
-        private void tscTabSwitcherForming_btnNextClick(object sender, RoutedEventArgs e)
+        private void tscTabSwitcher_btnNextClick(object sender, RoutedEventArgs e)
         {
-            tabControl.SelectedIndex = 1;
+            if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
+                return;
+            tabControl.SelectedIndex++;
         }
 
-        private void tscTabSwitcherPlanner_btnNextClick(object sender, RoutedEventArgs e)
+        private void tscTabSwitcher_btnPreviousClick(object sender, RoutedEventArgs e)
         {
-            tabControl.SelectedIndex = 2;
-        }
-
-        private void tscTabSwitcherPlanner_btnPreviousClick(object sender, RoutedEventArgs e)
-        {
-            tabControl.SelectedIndex = 0;
-        }
-
-        private void tscTabSwitcherEdit_btnNextClick(object sender, RoutedEventArgs e)
-        {
-            tabControl.SelectedIndex = 3;
-        }
-
-        private void tscTabSwitcherEdit_btnPreviousClick(object sender, RoutedEventArgs e)
-        {
-            tabControl.SelectedIndex = 1;
-        }
-
-        private void tscTabSwitcherStatistic_btnPreviousClick(object sender, RoutedEventArgs e)
-        {
-            tabControl.SelectedIndex = 2;
+            if (tabControl.SelectedIndex == 0)
+                return;
+            tabControl.SelectedIndex--;
         }
     }
 }
