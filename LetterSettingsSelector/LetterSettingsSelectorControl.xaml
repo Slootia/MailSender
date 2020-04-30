@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="LetterSettingsSelector.LetterSettingsSelectorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LetterSettingsSelector"
+             mc:Ignorable="d" Height="30">
+    <Grid>
+        <Label x:Name="lHeader" Content="TEXT" Height="25" Width="Auto"/>
+        <ComboBox x:Name="cbSelect" Height="25" Margin="0" VerticalAlignment="Stretch" Width="270" ToolTip="Выбрать smtp-сервер"/>
+        <Button x:Name="btnAdd" Width="25" Height="25" ToolTip="Добавить" Click="btnAdd_Click" Margin="390,2,85,2">
+            <Image Source="Icons/add.png"/>
+        </Button>
+        <Button x:Name="btnEdit" Width="25" Height="25" ToolTip="Редактировать" Click="btnEdit_Click" Margin="420,2,55,2">
+            <Image Source="Icons/pencil.png"/>
+        </Button>
+        <Button x:Name="btnDelete" Width="25" Height="25" ToolTip="Удалить" Click="btnDelete_Click" Margin="450,2,25,2">
+            <Image Source="Icons/delete.png"/>
+        </Button>
+    </Grid>
+</UserControl>

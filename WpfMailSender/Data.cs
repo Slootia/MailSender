@@ -20,9 +20,4 @@ namespace WpfMailSender
         public static string Subject { get; set; } = "TestSubj";
         public static string Body { get; set; } = "TestBody";
     }
-
-    public static class ExceptionMessage
-    {
-        public static string SendException { get; } = "Невозможно отправить письмо";
-    }
 }

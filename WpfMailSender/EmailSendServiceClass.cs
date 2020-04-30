@@ -6,45 +6,58 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using EmailSendServiceDLL;
 
 namespace WpfMailSender
 {
     class EmailSendServiceClass
     {
-        public void StartMailing()
+        #region vars
+        private string strLogin;         // email, c которого будет рассылаться почта
+        private string strPassword;  // пароль к email, с которого будет рассылаться почта
+        private string strSmtp; // smtp-server
+        private int iSmtpPort;                // порт для smtp-server
+        private string strBody;                    // текст письма для отправки
+        private string strSubject;                 // тема письма для отправки
+        #endregion
+        public EmailSendServiceClass(string sLogin, string sPassword,
+            string smtp,
+            string smtpPort,
+            string body,
+            string subject)
+        {
+            strLogin = sLogin;
+            strPassword = sPassword;
+            strSmtp = smtp;
+            iSmtpPort = Convert.ToInt32(smtpPort);
+            strBody = body;
+            strSubject = subject;
+        }
+        private void SendMail(string mail, string name) // Отправка email конкретному адресату
+        {
+            EmailSendServiceDLL.EmailSendServiceClass emailSendService = new EmailSendServiceDLL.EmailSendServiceClass(
+                strLogin,
+                strPassword,
+                strSmtp,
+                iSmtpPort,
+                strBody,
+                strSubject);
+            emailSendService.SendMail(mail, name);
+        }
+        public void SendMails(IQueryable<Email> emails)
         {
             try
             {
-                foreach (var email in Letter.ReceiverList)
+                foreach (Email email in emails)
                 {
-                    SendMail(email);
+                    SendMail(email.Email1, email.Name);
                 }
             }
             catch
             {
-                var errorWindow = new SendErrorWindow();
-                errorWindow.ShowDialog();
+                MessageBox.Show("Ошибка при отправке сообщения");
             }
-            var endWindow = new SendEndWindow();
-            endWindow.ShowDialog();
         }
 
-        private void SendMail(string mail)
-        {
-            using (var mm = new MailMessage(Letter.SenderEmail, mail))
-            {
-                mm.Subject = Letter.Subject;
-                mm.Body = Letter.Body;
-                mm.IsBodyHtml = false;
-                using (var sc = new SmtpClient(ConnectionData.SmtpClient, ConnectionData.SmtpPort))
-                {
-                    sc.EnableSsl = true;
-                    sc.UseDefaultCredentials = false;
-                    sc.Credentials = new NetworkCredential(Letter.SenderEmail, Letter.SenderPassword);
-                    sc.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    sc.Send(mm);
-                }
-            }
-        }
     }
 }
