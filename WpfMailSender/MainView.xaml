@@ -8,7 +8,8 @@
                       xmlns:TabSwitcher="clr-namespace:TabSwitcher;assembly=TabSwitcher"
                       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                       xmlns:LetterSettingsSelector="clr-namespace:LetterSettingsSelector;assembly=LetterSettingsSelector"
-                      x:Class="WpfMailSender.MailSender"
+                      xmlns:View ="clr-namespace:WpfMailSender.View"
+                      x:Class="WpfMailSender.MainView"
                       mc:Ignorable="d"
                       Title="Рассыльщик" MinHeight ="450" MinWidth="800" Height="600" Width="1000" Icon="Icons/Logo.png">
     <DockPanel>
@@ -21,7 +22,6 @@
         <TabControl x:Name="tabControl" DockPanel.Dock="Top" UseLayoutRounding="False" SelectedIndex="0" VerticalAlignment="Bottom" Height="506">
             <TabItem x:Name="tabForming" Header="Формирование группы рассылки" TabIndex="0">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dgEmails" Margin="0,65,0,0"/>
                     <ToolBarTray Height="65" VerticalAlignment="Top">
                         <ToolBar HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Band="0" BandIndex="0">
                             <LetterSettingsSelector:LetterSettingsSelectorControl x:Name="customControllSender" Width="500" HeaderText="Отправитель"/>
@@ -48,6 +48,9 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
+                    <View:EmailInfoView x:Name="emailInfo" VerticalAlignment= "Stretch"  HorizontalAlignment="Stretch" Margin="147,65,0,0"/>
+                    <View:SaveEmailView x:Name="saveEmail" VerticalAlignment= "Stretch" HorizontalAlignment="Center" Grid.ColumnSpan="1" Margin="0,70,844,0" Width="142"/>
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabPlanner" Header="Планировщик" TabIndex="1">

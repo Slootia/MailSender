@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -44,7 +45,7 @@ namespace WpfMailSender
                 strSubject);
             emailSendService.SendMail(mail, name);
         }
-        public void SendMails(IQueryable<Email> emails)
+        public void SendMails(ObservableCollection<Email> emails)
         {
             try
             {

@@ -16,16 +16,15 @@ using System.Net;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using MahApps.Metro.Controls;
+using WpfMailSender.ViewModel;
 
 namespace WpfMailSender
 {
-    public partial class MailSender
+    public partial class MainView
     {
-        public MailSender()
+        public MainView()
         {
             InitializeComponent();
-            DBClass db = new DBClass();
-            dgEmails.ItemsSource = db.Emails;
             customControllSender.Dictionary = EmailsClass.Senders;
             customControllSmtp.Dictionary = SmtpClass.SmtpDictionary;
         }
@@ -63,12 +62,13 @@ namespace WpfMailSender
                 MessageBox.Show("Укажите пароль отправителя");
                 return;
             }
-
             string richText = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd).Text;
             EmailSendServiceClass emailSender = new EmailSendServiceClass(strLogin,
                 strPassword,
                 customControllSmtp.SelectedItem.Key,
                 customControllSmtp.SelectedItem.Value, richText, tbSubject.Text);
+            var locator = (ViewModelLocator)FindResource("Locator");
+            emailSender.SendMails(locator.Main.Emails);
 
         }
 
@@ -103,8 +103,8 @@ namespace WpfMailSender
                 strPassword,
                 customControllSmtp.SelectedItem.Key,
                 customControllSmtp.SelectedItem.Value, richText, tbSubject.Text);
-            sc.SendEmails(dtSendDateTime, emailSender, (IQueryable<Email>)dgEmails.ItemsSource);
-
+            var locator = (ViewModelLocator)FindResource("Locator");
+            sc.SendEmails(dtSendDateTime, emailSender, locator.Main.Emails);
         }
 
         private void tscTabSwitcher_btnNextClick(object sender, RoutedEventArgs e)
