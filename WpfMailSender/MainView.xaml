@@ -55,9 +55,6 @@
             </TabItem>
             <TabItem x:Name="tabPlanner" Header="Планировщик" TabIndex="1">
                 <Grid Background="#FFE5E5E5">
-                    <Calendar x:Name="cldSchedulDateTimes" Margin="0,0,807,285" SelectionMode="MultipleRange"/>
-                    <xctk:TimePicker x:Name="tpTimeSend" Height="25" Margin="0,176,0,260" HorizontalAlignment="Left" Width="179"/>
-                    <!--<TextBox x:Name="tbTimePicker" HorizontalAlignment="Left" Height="23" Margin="0,211,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="179"/>-->
                     <Button x:Name="btnSend" HorizontalAlignment="Left" Margin="0,201,0,0" VerticalAlignment="Top" Width="179" Click="btnSend_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Icons/clock.png" Width="16" Height="16"/>
@@ -70,6 +67,15 @@
                             <TextBlock Margin="3, 0, 0, 0" Text="Отправить сразу" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+                    <ListView x:Name="lvLetters" HorizontalAlignment="Left" Height="196" VerticalAlignment="Top" Width="179">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="gridSomeGrid">
+                                    <Button x:Name="btnAddLetter" Content="Добавить письмо" Margin="0,0,-169,0" Click="Button_Click"/>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabEdit" Header="Редактор писем" TabIndex="2">

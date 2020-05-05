@@ -97,6 +97,9 @@
     <Compile Include="AppConfigClass.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="DBClass.cs" />
+    <Compile Include="Emails.cs">
+      <DependentUpon>Emails.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Emails.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -113,6 +116,7 @@
     <Compile Include="EmailsClass.cs" />
     <Compile Include="Services\DataAccessService.cs" />
     <Compile Include="SmtpClass.cs" />
+    <Compile Include="Validation\IdValidation.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\EmailInfoView.xaml.cs">
@@ -220,6 +224,10 @@
     <ProjectReference Include="..\LetterSettingsSelector\LetterSettingsSelector.csproj">
       <Project>{f36ba9b5-afd3-44ea-9735-5658f2ba6d0a}</Project>
       <Name>LetterSettingsSelector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ListViewItemScheduler\ListViewItemScheduler.csproj">
+      <Project>{8a44101f-7f38-45ec-87fc-0bed4b639636}</Project>
+      <Name>ListViewItemScheduler</Name>
     </ProjectReference>
     <ProjectReference Include="..\TabSwitcher\TabSwitcher.csproj">
       <Project>{70153242-E3C7-44FE-95EF-814DC93F459B}</Project>

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
+using ListViewItemScheduler;
 using MahApps.Metro.Controls;
 using WpfMailSender.ViewModel;
 
@@ -84,18 +85,6 @@ namespace WpfMailSender
                 return;
             }
             SchedulerClass sc = new SchedulerClass();
-            TimeSpan tsSendTime = sc.GetSendTime(tpTimeSend.Text);
-            if (tsSendTime == new TimeSpan())
-            {
-                MessageBox.Show("Некорректный формат даты");
-                return;
-            }
-            DateTime dtSendDateTime = (cldSchedulDateTimes.SelectedDate ?? DateTime.Today).Add(tsSendTime);
-            if (dtSendDateTime < DateTime.Now)
-            {
-                MessageBox.Show("Дата и время отправки писем не могут быть раньше, чем настоящее время");
-                return;
-            }
             string strLogin = customControllSender.SelectedItem.Key;
             string strPassword = customControllSender.SelectedItem.Value;
             string richText = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd).Text;
@@ -104,7 +93,18 @@ namespace WpfMailSender
                 customControllSmtp.SelectedItem.Key,
                 customControllSmtp.SelectedItem.Value, richText, tbSubject.Text);
             var locator = (ViewModelLocator)FindResource("Locator");
-            sc.SendEmails(dtSendDateTime, emailSender, locator.Main.Emails);
+
+            var datesEmail = new Dictionary<DateTime, string>();
+            foreach (var item in lvLetters.Items)
+            {
+                var dependencyObject = (DependencyObject)item;
+                var tmpItem = (ListViewItem)lvLetters.ContainerFromElement(dependencyObject);
+                var dataContext = (ListViewItemSchedulerControl)tmpItem.DataContext;
+                var time = (DateTime)dataContext.Time;
+                datesEmail.Add(time, strLogin);
+            }
+            sc.DatesEmailTexts = datesEmail; 
+            sc.SendEmails(emailSender, locator.Main.Emails);
         }
 
         private void tscTabSwitcher_btnNextClick(object sender, RoutedEventArgs e)
@@ -119,6 +119,27 @@ namespace WpfMailSender
             if (tabControl.SelectedIndex == 0)
                 return;
             tabControl.SelectedIndex--;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var listViewItemScheduler = new ListViewItemSchedulerControl();
+            listViewItemScheduler.Name = $"lvItem{lvLetters.Items.Count}";
+            listViewItemScheduler.btnDeleteClick += btnRemove;
+            listViewItemScheduler.btnEditLetterClick += btnEdit;
+            lvLetters.Items.Add(listViewItemScheduler);
+        }
+
+        private void btnRemove(object sender, RoutedEventArgs e)
+        {
+            var dependencyObject = (DependencyObject)sender;
+            var item = (ListViewItem)lvLetters.ContainerFromElement(dependencyObject);
+            var dataContext = (ListViewItemSchedulerControl)item.DataContext;
+            lvLetters.Items.Remove(dataContext);
+        }
+        private void btnEdit(object sender, RoutedEventArgs e)
+        {
+            tabControl.SelectedIndex = 2;
         }
     }
 }

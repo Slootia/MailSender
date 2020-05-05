@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailSendServiceDLL", "Emai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterSettingsSelector", "LetterSettingsSelector\LetterSettingsSelector.csproj", "{F36BA9B5-AFD3-44EA-9735-5658F2BA6D0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodePasswordDLL.Tests", "CodePasswordDLL.Tests\CodePasswordDLL.Tests.csproj", "{EFCACBA5-1558-45CD-8148-D37F81235502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMailSenderTests", "WpfMailSenderTests\WpfMailSenderTests.csproj", "{83626D8A-0B04-486D-8092-3E3789E3FB76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListViewItemScheduler", "ListViewItemScheduler\ListViewItemScheduler.csproj", "{8A44101F-7F38-45EC-87FC-0BED4B639636}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +45,18 @@ Global
 		{F36BA9B5-AFD3-44EA-9735-5658F2BA6D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F36BA9B5-AFD3-44EA-9735-5658F2BA6D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F36BA9B5-AFD3-44EA-9735-5658F2BA6D0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFCACBA5-1558-45CD-8148-D37F81235502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCACBA5-1558-45CD-8148-D37F81235502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCACBA5-1558-45CD-8148-D37F81235502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCACBA5-1558-45CD-8148-D37F81235502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83626D8A-0B04-486D-8092-3E3789E3FB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83626D8A-0B04-486D-8092-3E3789E3FB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83626D8A-0B04-486D-8092-3E3789E3FB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83626D8A-0B04-486D-8092-3E3789E3FB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A44101F-7F38-45EC-87FC-0BED4B639636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A44101F-7F38-45EC-87FC-0BED4B639636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A44101F-7F38-45EC-87FC-0BED4B639636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A44101F-7F38-45EC-87FC-0BED4B639636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
