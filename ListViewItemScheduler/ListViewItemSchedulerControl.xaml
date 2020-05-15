@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="ListViewItemScheduler.ListViewItemSchedulerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ListViewItemScheduler"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" Height="25.658" Width="188.816">
+    <Grid>
+        <Button x:Name="btnEditLetter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Click="btnEditLetter_Click">
+            <Image Source="Icons\pencil.png" Height="20"></Image>
+        </Button>
+        <Button x:Name="btnDelete" HorizontalAlignment="Left" Margin="168,0,0,0" VerticalAlignment="Top" Width="20" Click="btnDelete_Click">
+            <Image Source="Icons\delete.png" Height="20"></Image>
+        </Button>
+        <xctk:DateTimePicker x:Name="dtpSendTime" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="148" Height="26" ValueChanged="dtpSendTime_ValueChanged"/>
+
+    </Grid>
+</UserControl>

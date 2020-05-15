@@ -11,15 +11,16 @@ using EmailSendServiceDLL;
 
 namespace WpfMailSender
 {
-    class EmailSendServiceClass
+    public class EmailSendServiceClass
     {
+        public string Body { get; set; }
+        public string Subject { get; set; }
         #region vars
         private string strLogin;         // email, c которого будет рассылаться почта
         private string strPassword;  // пароль к email, с которого будет рассылаться почта
         private string strSmtp; // smtp-server
         private int iSmtpPort;                // порт для smtp-server
-        private string strBody;                    // текст письма для отправки
-        private string strSubject;                 // тема письма для отправки
+
         #endregion
         public EmailSendServiceClass(string sLogin, string sPassword,
             string smtp,
@@ -31,8 +32,8 @@ namespace WpfMailSender
             strPassword = sPassword;
             strSmtp = smtp;
             iSmtpPort = Convert.ToInt32(smtpPort);
-            strBody = body;
-            strSubject = subject;
+            Body = body;
+            Subject = subject;
         }
         private void SendMail(string mail, string name) // Отправка email конкретному адресату
         {
@@ -41,8 +42,8 @@ namespace WpfMailSender
                 strPassword,
                 strSmtp,
                 iSmtpPort,
-                strBody,
-                strSubject);
+                Body,
+                Subject);
             emailSendService.SendMail(mail, name);
         }
         public void SendMails(ObservableCollection<Email> emails)

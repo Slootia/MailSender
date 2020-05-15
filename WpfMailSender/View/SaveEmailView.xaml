@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ignore="http://www.galasoft.ch/ignore"
              mc:Ignorable="d ignore"
+             xmlns:v="clr-namespace:WpfMailSender.Validation"
              DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid DataContext="{Binding CurrentEmail}">
@@ -25,7 +26,15 @@
                    HorizontalAlignment="Right"/>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Name:"
                    HorizontalAlignment="Right"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Id}"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Validation.Error="TextBox_Error">
+            <TextBox.Text>
+                <Binding Path="Id" Mode="TwoWay" ValidatesOnExceptions="True" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <v:IdValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Email1}"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Name}"/>
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"

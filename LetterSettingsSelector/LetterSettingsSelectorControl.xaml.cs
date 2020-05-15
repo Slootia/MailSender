@@ -21,12 +21,6 @@ namespace LetterSettingsSelector
     /// </summary>
     public partial class LetterSettingsSelectorControl : UserControl
     {
-        //public LetterSettingsSelectorControl(string headerText, Dictionary<object, object> dictionary)
-        //{
-        //    HeaderText = headerText;
-        //    Dictionary = dictionary;
-        //}
-
         public event RoutedEventHandler btnAddClick;
         public event RoutedEventHandler btnEditClick;
         public event RoutedEventHandler btnDeleteClick;
@@ -42,7 +36,7 @@ namespace LetterSettingsSelector
 
         public KeyValuePair<string, string> SelectedItem
         {
-            get => new KeyValuePair<string, string>(cbSelect.Text, cbSelect.SelectedItem.ToString());
+            get => new KeyValuePair<string, string>(cbSelect.Text, ((KeyValuePair<string,string>)cbSelect.SelectedItem).Value);
         }
 
         public Dictionary<string, string> Dictionary
