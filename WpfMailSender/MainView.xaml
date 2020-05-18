@@ -9,10 +9,11 @@
                       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                       xmlns:LetterSettingsSelector="clr-namespace:LetterSettingsSelector;assembly=LetterSettingsSelector"
                       xmlns:View ="clr-namespace:WpfMailSender.View"
+                      xmlns:ViewModel="clr-namespace:WpfMailSender.ViewModel"
                       x:Class="WpfMailSender.MainView"
                       mc:Ignorable="d"
                       Title="Рассыльщик" MinHeight ="450" MinWidth="800" Height="600" Width="1000" Icon="Icons/Logo.png">
-    <DockPanel>
+    <DockPanel d:DataContext="{Binding Source={StaticResource Locator}}">
         <Menu Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem x:Name="miClose" Header="Файл" Width="70" IsTabStop="False" TabIndex="0">
                 <MenuItem Header="Закрыть" Height="30" Width="115" Click="miClose_Click"/>
@@ -50,7 +51,7 @@
                     </ToolBarTray>
                     <View:EmailInfoView x:Name="emailInfo" VerticalAlignment= "Stretch"  HorizontalAlignment="Stretch" Margin="147,65,0,0"/>
                     <View:SaveEmailView x:Name="saveEmail" VerticalAlignment= "Stretch" HorizontalAlignment="Center" Grid.ColumnSpan="1" Margin="0,70,844,0" Width="142"/>
-
+                    <Button x:Name="btnReport" Content="Отчёт" HorizontalAlignment="Left" Margin="10,424,0,0" VerticalAlignment="Top" Width="122" DataContext="{Binding Main, Source={StaticResource Locator}}" Command="{Binding SaveReportCommand}"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabPlanner" Header="Планировщик" TabIndex="1">
