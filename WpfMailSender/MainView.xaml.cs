@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using ListViewItemScheduler;
 using MahApps.Metro.Controls;
 using WpfMailSender.ViewModel;
+using EmailsToWord;
 
 namespace WpfMailSender
 {

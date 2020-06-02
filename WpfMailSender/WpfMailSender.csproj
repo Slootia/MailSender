@@ -221,6 +221,10 @@
       <Project>{31702249-d186-4797-a849-7eb3392b860d}</Project>
       <Name>EmailSendServiceDLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EmailsToWord\EmailsToWord.csproj">
+      <Project>{2db28319-5dec-4d0b-9676-da747bf99ed0}</Project>
+      <Name>EmailsToWord</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LetterSettingsSelector\LetterSettingsSelector.csproj">
       <Project>{f36ba9b5-afd3-44ea-9735-5658f2ba6d0a}</Project>
       <Name>LetterSettingsSelector</Name>

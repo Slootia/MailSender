@@ -1,5 +1,9 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Documents;
+using EmailsToWord;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
@@ -43,12 +47,26 @@ namespace WpfMailSender.ViewModel
 
         public RelayCommand<Email> SaveEmailCommand { get; }
         public RelayCommand ReadAllMailsCommand { get; }
-
+        public RelayCommand SaveReportCommand { get; }
         public MainViewModel(IDataAccessService dataService)
         {
             _dataService = dataService;
+            SaveReportCommand = new RelayCommand(SaveReport);
             ReadAllMailsCommand = new RelayCommand(GetEmails);
             SaveEmailCommand = new RelayCommand<Email>(SaveEmail);
+        }
+
+        private void SaveReport()
+        {
+            var emails = _dataService.GetEmails();
+            var emailsList = new List<string>();
+            foreach (var email in emails)
+            {
+                string emailString = $"Имя: {email.Name} Почта: {email.Email1}";
+                emailsList.Add(emailString);
+            }
+            WordExport we = new WordExport("report");
+            we.Export("Отчет по отправителям", emailsList);
         }
 
         private void SaveEmail(Email email)
